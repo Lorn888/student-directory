@@ -1,4 +1,4 @@
-# Let's put all students into an array
+# We added cohort month into the array of students
 students = [
 ["Dr. Hannibal Lecter", :november],
 ["Darth Vader", :november],
@@ -17,15 +17,15 @@ def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-
-def print(names)
-  names.each do |name|
-    puts name
+# updated pint method argument since now students array contains cohort month as well
+def print(students)
+  students.each do |student|
+    puts "#{student[0]} (#{student[1]} cohort)"
   end
 end
 
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
 end
 
 #nothing happens until we call the methods
