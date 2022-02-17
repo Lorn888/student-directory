@@ -16,7 +16,7 @@ def input_students
     # add the student hash to the array
     students << {name: name, cohort: :november, hobbies: hobbies, country: country, height: height,}
     puts "Now we have #{students.count} students"
-        puts "next student" if !name.empty?
+    puts "next student" if !name.empty?
     # get another name from the user
     name = gets.chomp
     puts "hobbies" if !name.empty?
@@ -41,7 +41,7 @@ end
 def print(students)
   count = 0
   until students.size == count
-    puts "#{students[count][:name]} (#{students[count][:cohort]} cohort) hobies: (#{students[count][:hobbies]}) country: (#{students[count][:country]}) height: (#{students[count][:height]})"
+    puts "#{students[count][:name].center(10," ")}(#{students[count][:cohort]} cohort) | hobies: (#{students[count][:hobbies].center(10," ")}) country: (#{students[count][:country].center(10," ")}) height: (#{students[count][:height].center(6," ")})"
   count += 1
   end
 end
