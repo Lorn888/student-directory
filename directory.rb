@@ -4,49 +4,43 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp 
-  
-  cohort_spelling = ["No entry", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  
-  puts "cohort"
-  cohort = gets.chomp 
-  while !cohort_spelling.include?(cohort.downcase.capitalize) do
-    puts "Enter Cohort again"
-    cohort = gets.chomp
-  end
-  puts "hobbies"
-  hobbies = gets.chomp
-  puts "country of birth"
-  country = gets.chomp
-  puts "height"
-  height = gets.chomp
-  
-
+  name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, country: country, height: height,}
+    students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
-    puts "next student" if !name.empty?
     # get another name from the user
-    name = gets.chomp if !name.empty?
-    puts "cohort" if !name.empty?
-    cohort = gets.chomp if !name.empty?
-    
-     while !cohort_spelling.include?(cohort.downcase.capitalize) do
-    puts "Enter Cohort again"
-    cohort = gets.chomp
+    name = gets.chomp
   end
-  
-    puts "hobbies" if !name.empty?
-    hobbies = gets.chomp if !name.empty?
-    puts "country of birth" if !name.empty? 
-    country = gets.chomp if !name.empty?
-    puts "height"  if !name.empty?
-    height = gets.chomp
- end
   # return the array of students
   students
+end
+
+def interactive_menu
+  students = []
+  loop do
+  # 1. print the menu and ask the user what to do
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+  # 2. read the input and save it into a variable
+  selection = gets.chomp
+  # 3. do what the user has asked
+  case selection
+   when "1"
+     # input the students
+   when "2"
+     # show the students
+     print_header
+     print(students)
+     print_footer(students)
+   when "9"
+     exit
+   else
+     puts "I don't know what you meant, try again"
+   end
+  end
 end
 
 def print_header
@@ -55,10 +49,8 @@ def print_header
 end
 
 def print(students)
-  count = 0
-  until students.size == count
-    puts "#{students[count][:name].center(10," ")}(#{students[count][:cohort]} cohort) | hobies: (#{students[count][:hobbies].center(10," ")}) country: (#{students[count][:country].center(10," ")}) height: (#{students[count][:height].center(6," ")})"
-  count += 1
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
@@ -66,8 +58,9 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 
+interactive_menu
 students = input_students
 #nothing happens until we call the methods
 print_header
 print(students)
-print_footer(students)
+print_footer(students) 

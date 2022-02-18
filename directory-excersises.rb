@@ -1,76 +1,82 @@
 def input_students
-  puts "Please enter the information for the students"
+  puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
+  # get the first name
+  name = gets.chomp 
   
-  # Create an array to check for typos for cohort months
-  typo_check = ["No entry", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  while true do
-    puts "Name: "
-    name = gets.chomp
-    puts "Cohort: "
+  cohort_spelling = ["No entry", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  
+  puts "cohort"
+  cohort = gets.chomp 
+  while !cohort_spelling.include?(cohort.downcase.capitalize) do
+    puts "Enter Cohort again"
     cohort = gets.chomp
-    # Create a break for no entries situation
-    if name.empty? && cohort.empty?
-      break
-    elsif name.empty?
-      name = "No entry"
-    elsif cohort.empty?
-      cohort = "No entry"
-    end
-    # Check for typos for cohort variable
-    while !typo_check.include?(cohort.downcase.capitalize)
-      puts "Enter Cohort again or input 'No entry': "
-      cohort = gets.chomp
-    end
-    # format the name given by the user
-    name_formatted = name.downcase.split(" ").each{|word| word.capitalize!}.join(" ")
-    
-    # add the student given to us as a hash to the array
-    students << {name: name_formatted, cohort: cohort.downcase.capitalize.to_sym}
-    puts "Now we have #{students.count} students"
   end
-  # return the array of students once the person is done
+  puts "hobbies"
+  hobbies = gets.chomp
+  puts "country of birth"
+  country = gets.chomp
+  puts "height"
+  height = gets.chomp
+  
+
+  # while the name is not empty, repeat this code
+  while !name.empty? do
+    # add the student hash to the array
+    students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, country: country, height: height,}
+    puts "Now we have #{students.count} students"
+    puts "next student" if !name.empty?
+    # get another name from the user
+    name = gets.chomp if !name.empty?
+    puts "cohort" if !name.empty?
+    cohort = gets.chomp if !name.empty?
+    
+     while !cohort_spelling.include?(cohort.downcase.capitalize) do
+    puts "Enter Cohort again"
+    cohort = gets.chomp
+  end
+  
+    puts "hobbies" if !name.empty?
+    hobbies = gets.chomp if !name.empty?
+    puts "country of birth" if !name.empty? 
+    country = gets.chomp if !name.empty?
+    puts "height"  if !name.empty?
+    height = gets.chomp
+ end
+  # return the array of students
   students
 end
-# This represents the default header that will always
+
 def print_header
   puts "The students of Villains Academy"
-  puts "-------------------"
+  puts "-------------"
 end
 
-# Next lets create the print method with 1 argument 'names'
 def print(students)
-
-  # organise everyone by their cohort and store them in sorted_by_cohort 
+  
   sorted_by_cohort = {}
 
   students.each do |student|
     cohort = student[:cohort]
-
-    if sorted_by_cohort[cohort] == nil
-      sorted_by_cohort[cohort] = []
-    end
-
-    sorted_by_cohort[cohort].push(student[:name])
+    
+  if sorted_by_cohort[cohort] == nil
+    sorted_by_cohort[cohort] = []
   end
+  
+  sorted_by_cohort[cohort].push(student[:name])
+  
+end
 
-  # Ask what cohort the user wishes to see
-  puts "Please enter the cohort you wish to view hit return to view all students"
+puts "Please enter the cohort you wish to view hit return to view all students"
   user_input = gets.chomp.downcase.capitalize.to_sym
 
-  # create an empty array called chosen and map the cohort info onto it
-  chosen = []
   puts "\n\n\n" 
   print_header
   puts
-
-  students.map do |student|
-    if student[:cohort] == user_input || user_input == :"" 
-      chosen.push(student)
-  # Now print that cohort
-  sorted_by_cohort.each do |cohort, list|
+  
+   sorted_by_cohort.each do |cohort, list|
     if user_input == :""
       puts "#{cohort} Cohort\n "
       list.each do |student|
@@ -84,30 +90,23 @@ def print(students)
       end
       puts
     end
-  end
-
-  # Now print out the list of student from the chosen array
-  chosen.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  end  
+  
+  
+  
+  
+  count = 0
+  until students.size == count
+    puts "#{students[count][:name].center(10," ")}(#{students[count][:cohort]} cohort) | hobies: (#{students[count][:hobbies].center(10," ")}) country: (#{students[count][:country].center(10," ")}) height: (#{students[count][:height].center(6," ")})"
+  count += 1
   end
 end
 
-# Finally lets create the print_footer method
-def print_footer(names)
-  # create a placeholder
-  placeholder =
-  # figure out whether we should use plural or singular
-  names.count > 1 ? placeholder = "students" : placeholder = "student"
-  puts "Overall, we have #{names.count} great #{placeholder}"
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
 end
-# Lets begin by getting the users input for the hash of student
-# then save it to the variable students
+
 students = input_students
-print_header
+#nothing happens until we call the methods
 print(students)
 print_footer(students)
-
-# Notice how much easier the last few lines are to read
-# it's almost like english
-#
-# Even though we used more lines of code this is a better solution
